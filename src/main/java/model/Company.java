@@ -64,7 +64,7 @@ public class Company {
 
     public double countPeopleCapacity () {
         return airlines.stream()
-                              .mapToDouble(Airline::getPeopleCapacity)
+                              .mapToInt(Airline::getPeopleCapacity)
                               .sum();
     }
 

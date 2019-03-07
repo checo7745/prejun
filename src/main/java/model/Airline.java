@@ -2,10 +2,10 @@ package model;
 
 public class Airline extends Plane {
 
-    private double peopleCapacity;
+    private int peopleCapacity;
     private AirClass airClass;
 
-    public Airline(double peopleCapacity, AirClass airClass, double distance) {
+    public Airline(int peopleCapacity, AirClass airClass, double distance) {
         this.peopleCapacity = peopleCapacity;
         this.airClass = airClass;
         setDistanceCapacity(distance);
@@ -14,11 +14,11 @@ public class Airline extends Plane {
     public Airline() {
     }
 
-    public double getPeopleCapacity() {
+    public int getPeopleCapacity() {
         return peopleCapacity;
     }
 
-    public void setPeopleCapacity(double peopleCapacity) {
+    public void setPeopleCapacity(int peopleCapacity) {
         this.peopleCapacity = peopleCapacity;
     }
 
