@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Company {
 
@@ -56,19 +57,15 @@ public class Company {
     }
 
     public double countCarryingCapacity() {
-        double total = 0;
-        for (TransportPlane plane : transportPlanes) {
-            total += plane.getCarryingCapacity();
-        }
-        return total;
+        return transportPlanes.stream()
+                              .mapToDouble(TransportPlane::getCarryingCapacity)
+                              .sum();
     }
 
     public double countPeopleCapacity () {
-        double total = 0;
-        for (Airline plane : airlines) {
-            total += plane.getPeopleCapacity();
-        }
-        return total;
+        return airlines.stream()
+                              .mapToDouble(Airline::getPeopleCapacity)
+                              .sum();
     }
 
     public void sortByDistance() {
