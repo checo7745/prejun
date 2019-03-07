@@ -10,7 +10,6 @@ public class TransportPlane extends Plane {
     }
 
     public TransportPlane(Consignment consignment, double carryingCapacity, double distance) {
-        super();
         this.consignment = consignment;
         this.carryingCapacity = carryingCapacity;
         setDistanceCapacity(distance);

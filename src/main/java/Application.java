@@ -1,4 +1,4 @@
-import java.io.Console;
+import java.util.List;
 import java.util.Scanner;
 
 import model.AirClass;
@@ -8,11 +8,13 @@ import model.Consignment;
 import model.TransportPlane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.CompanyService;
 
 public class Application {
 
     static final Logger log = LogManager.getRootLogger();
-    static Company belavia = init();
+    private static CompanyService companyService = new CompanyService();
+    private static Company belavia = CompanyService.init();
 
     public static void main (String args[]) {
         welcomeMesssage();
@@ -22,7 +24,7 @@ public class Application {
     private static void welcomeMesssage() {
         log.info("Hi!\n");
         log.info("Let's start!\n");
-        log.info("\nAvailable commands:\n P - People Capacity\n C - Carrying Capacity\n S - Sorting by distance\n Q - Exit");
+        log.info("\nAvailable commands:\n P - People Capacity\n C - Carrying Capacity\n S - Sorting by distance\n Search - Search plane\n Q - Exit");
     }
 
     private static void input() {
@@ -30,8 +32,6 @@ public class Application {
             Scanner scanner = new Scanner(System.in);
             log.info("Enter command: ");
             String input = scanner.nextLine();
-            log.info("Input : " + input);
-            log.info("\n-----------\n");
 
             switch(input) {
                 case "Q":
@@ -52,24 +52,52 @@ public class Application {
                     belavia.sortByDistance();
                     break;
 
+                case "Search":
+                    searchPlaneByCompany(belavia);
+
                 default:
                     log.warn("Not matching! Try Again!\n");
             }
         }
     }
 
-    private static Company init() {
-        Company company = new Company("Belavia");
-        TransportPlane transportFirst = new TransportPlane(Consignment.CAR, 26, 5000);
-        TransportPlane transportSecond = new TransportPlane(Consignment.MEAL, 50, 15000);
-        Airline airlineFirst = new Airline(100, AirClass.BUSINESS, 6000);
-        Airline airlineSecond = new Airline(200, AirClass.SECOND, 10000);
-        company.addAirline(airlineFirst);
-        company.addAirline(airlineSecond);
-        company.addTransportPlane(transportFirst);
-        company.addTransportPlane(transportSecond);
-        return company;
-    }
+    private static void searchPlaneByCompany(Company company) {
+        Scanner scanner = new Scanner(System.in);
+        log.info("Select search param and value:\n P - People Capacity\n C - Carrying Capacity\n D - Distance\n Format of search: Format:value");
+        String input = scanner.nextLine();
+        String[] array = input.split("[:]");
+        String param = array[0];
+        List<Long> numbers;
+        double value = Double.valueOf(array[1]);
+        log.info("Param:" + param + "\nValue: " + value);
+        switch (param) {
+            case "P":
+                log.info("Search by People");
+                numbers = companyService.searchByPeople(company, value);
+                log.info("Number of matched planes:");
+                numbers.forEach(System.out::println);
+                break;
 
+            case "C":
+                log.info("Search by Carrying");
+                numbers = companyService.searchByCarrying(company, value);
+                log.info("Number of matched planes:");
+                numbers.forEach(System.out::println);
+                break;
+
+            case "D":
+                log.info("Search by Distance");
+                companyService.searchByDistance(company, value);
+                break;
+
+            case "Q":
+                log.info("Exit!\n");
+                System.exit(0);
+                break;
+
+            default:
+                log.warn("Incorrect value!");
+        }
+    }
 
 }

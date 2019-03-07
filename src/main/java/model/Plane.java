@@ -2,10 +2,14 @@ package model;
 
 public abstract class Plane {
 
-    private static long number;
+    protected long number = 1;
     private double distanceCapacity;
 
-    public static long getNumber() {
+    Plane() {
+        ++number;
+    }
+
+    public long getNumber() {
         return number;
     }
 

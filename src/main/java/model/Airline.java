@@ -6,6 +6,7 @@ public class Airline extends Plane {
     private AirClass airClass;
 
     public Airline(int peopleCapacity, AirClass airClass, double distance) {
+
         this.peopleCapacity = peopleCapacity;
         this.airClass = airClass;
         setDistanceCapacity(distance);
