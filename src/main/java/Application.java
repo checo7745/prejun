@@ -1,11 +1,7 @@
 import java.util.List;
 import java.util.Scanner;
 
-import model.AirClass;
-import model.Airline;
 import model.Company;
-import model.Consignment;
-import model.TransportPlane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.CompanyService;
@@ -74,20 +70,21 @@ public class Application {
             case "P":
                 log.info("Search by People");
                 numbers = companyService.searchByPeople(company, value);
-                log.info("Number of matched planes:");
+                log.info("# of matched planes:");
                 numbers.forEach(System.out::println);
                 break;
 
             case "C":
                 log.info("Search by Carrying");
                 numbers = companyService.searchByCarrying(company, value);
-                log.info("Number of matched planes:");
+                log.info("# of matched planes:");
                 numbers.forEach(System.out::println);
                 break;
 
             case "D":
                 log.info("Search by Distance");
                 companyService.searchByDistance(company, value);
+                log.info("# of matched planes:");
                 break;
 
             case "Q":
